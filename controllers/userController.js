@@ -33,7 +33,7 @@ const upload = multer({
 exports.uploadUserPhoto = upload.single('photo');
 
 exports.deleteUserPhoto = (req, res, next) => {
-  if (!req.user.photo.includes('default')) {
+  if (!req.user.photo.includes('default') && req.file) {
     fs.unlink(`public/img/users/${req.user.photo}`, (err) => next())
   } else return next()
 }
