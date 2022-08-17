@@ -15,6 +15,7 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes')
 const bookingRouter = require('./routes/bookingRoutes')
+const bookingController = require('./controllers/bookingController')
 const viewRouter = require('./routes/viewRoutes')
 
 const limiter = rateLimit({
@@ -42,6 +43,8 @@ app.use((req, res, next) => {
 })
 //Limit requests from same IP
 app.use('/api', limiter);
+//Stripe webhook
+app.post('/webhook-checkout', express.raw({type: 'application/json'}), bookingController.webhookCheckout);
 //Body parser, reading data from body into req.body
 app.use(express.json({limit: '10kb'}));
 app.use(cookieParser())
