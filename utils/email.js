@@ -10,7 +10,6 @@ module.exports = class Email {
   }
 
   newTransport() {
-    console.log(process.env.NODE_ENV)
     if (process.env.NODE_ENV === 'production') {
       //Sendgrid
       return nodemailer.createTransport({
@@ -59,4 +58,3 @@ module.exports = class Email {
     await this.send('passwordReset', 'Your password reset token(valid for only 10 minutes)')
   }
 }
-
