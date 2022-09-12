@@ -34,13 +34,16 @@ app.set('views', path.join(__dirname, 'views'))
 // app.options('*', cors())
 //Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
-//Set security HTTP headers { contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }
-app.use(helmet({crossOriginEmbedderPolicy: false}));
-//Set Content Security Header
-app.use((req, res, next) => {
-  res.setHeader('Content-Security-Policy', "worker-src 'self' blob:; script-src 'self' https://api.mapbox.com/ https://cdnjs.cloudflare.com/ https://js.stripe.com/v3/;");
-  return next();
-})
+//Set security HTTP headers
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      workerSrc: ["'self'", "blob:"],
+      scriptSrc: ["'self'", 'https://api.mapbox.com/', 'https://cdnjs.cloudflare.com/', 'https://js.stripe.com/v3/'],
+      defaultSrc: ["'self'", 'https:']
+    }
+  }
+}));
 //Limit requests from same IP
 app.use('/api', limiter);
 //Stripe webhook

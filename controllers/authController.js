@@ -53,6 +53,7 @@ exports.logout = (req, res) => {
     expires: new Date(Date.now() + 10 * 1000), //10sec
     httpOnly: true
   })
+  // res.clearCookie('jwt')
   res.status(200).json({status: 'success'})
 }
 
