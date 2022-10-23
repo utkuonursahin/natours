@@ -4,6 +4,7 @@ import {showAlert} from './alerts.js'
 export const bookTour = async tourId => {
   try {
     const session = await axios(`/api/v1/bookings/checkout-session/${tourId}`);
+    //redirectToCheckout is deprecated so that booking feature is broken
     await stripe.redirectToCheckout({
       sessionId: session.data.session.id
     })
